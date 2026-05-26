@@ -1,0 +1,27 @@
+class MainController:
+
+    def __init__(self):
+        self.spider = SpiderAgent()
+        self.nlp = NLPAgent()
+        self.content = ContentAgent()
+
+    def run(self):
+
+        data = self.spider.get_hot_videos(
+            'https://www.douyin.com'
+        )
+
+        keywords = self.nlp.keyword_analysis(data)
+
+        script = self.content.generate_script(
+            str(keywords)
+        )
+
+        return {
+            'keywords': keywords,
+            'script': script
+        }
+
+controller = MainController()
+result = controller.run()
+print(result)
