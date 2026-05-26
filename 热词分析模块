@@ -1,0 +1,22 @@
+from collections import Counter
+import jieba
+
+class NLPAgent:
+
+    def keyword_analysis(self, texts):
+        words = []
+
+        for text in texts:
+            words.extend(jieba.lcut(text))
+
+        result = Counter(words).most_common(20)
+        return result
+
+texts = [
+    '大学新生必看',
+    '大学宿舍避坑',
+    '新生一定要知道'
+]
+
+agent = NLPAgent()
+print(agent.keyword_analysis(texts))
