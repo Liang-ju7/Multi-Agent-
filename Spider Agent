@@ -1,0 +1,26 @@
+from selenium import webdriver
+from bs4 import BeautifulSoup
+import time
+
+class SpiderAgent:
+    def __init__(self):
+        self.driver = webdriver.Chrome()
+
+    def get_hot_videos(self, url):
+        self.driver.get(url)
+        time.sleep(3)
+
+        html = self.driver.page_source
+        soup = BeautifulSoup(html, 'html.parser')
+
+        titles = soup.find_all('h3')
+
+        result = []
+        for item in titles:
+            result.append(item.text)
+
+        return result
+
+agent = SpiderAgent()
+videos = agent.get_hot_videos('https://www.douyin.com')
+print(videos)
