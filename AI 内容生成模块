@@ -1,0 +1,28 @@
+rom openai import OpenAI
+
+client = OpenAI(api_key='YOUR_API_KEY')
+
+class ContentAgent:
+
+    def generate_script(self, topic):
+
+        prompt = f'''
+        请根据以下主题生成一个短视频脚本：
+        {topic}
+        要求：
+        1. 前3秒有钩子
+        2. 节奏快
+        3. 适合抖音
+        '''
+
+        response = client.chat.completions.create(
+            model='gpt-4.1-mini',
+            messages=[
+                {'role':'user','content':prompt}
+            ]
+        )
+
+        return response.choices[0].message.content
+
+agent = ContentAgent()
+print(agent.generate_script('大学新生开学必备'))
